@@ -1,0 +1,8 @@
+.CharacterCard {
+  color: red;
+  
+}
+
+.CharacterCard * {
+  text-decoration: none;
+}
