@@ -7,15 +7,23 @@ import Filter from "./components/Filter";
 import Header from "./components/Header.js";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 
+
 export default function App() {
   const [characters, setCharacters] = useState([]);
+  const [filter, setFilter] = useState({search: ''});
+
+  const onFilterChange = (event) => {
+    setFilter({search: event.target.value});
+  }
+
+  console.log(filter.search);
+
   useEffect(() => {
     fetch("https://rickandmortyapi.com/api/character")
       .then((response) => {
         return response.json();
       })
       .then((response) => {
-        console.log(response.results);
         setCharacters(response.results);
       });
   }, []);
@@ -23,36 +31,19 @@ export default function App() {
   return (
     <Router>
       <div className="App">
-        {/* 
-
-      */}
-        <Header>
-          <Filter />
-        </Header>
-
-        
+        <Header />
+        <Filter filter={filter} onFilterChange={onFilterChange}/>
 
         <Route
           path="/"
           exact
           render={() => {
             {
-              return <CharacterList characters={characters}/>
-              // return characters.map((character) => {
-              //   return (
-              //     <Link to={`character/${character.name}`}>
-              //       <CharacterCard
-              //         key={character.name}
-              //         character={character}
-              //       />
-              //     </Link>
-              //   );
-              // });
+              return <CharacterList characters={characters} filter={filter}/>
             }
           }}
         ></Route>
 
-        {/* <Route path="/character/:name" component={CharacterDetail} /> */}
 
         <Route
           path="/character/:name"
@@ -72,3 +63,4 @@ export default function App() {
 function deleteSpace(str) {
   return str.split(' ').join('');
 }
+
