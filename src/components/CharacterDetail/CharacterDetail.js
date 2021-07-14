@@ -5,6 +5,7 @@ import {
     Route,
     useParams,
 } from "react-router-dom";
+import CharacterCard from "../CharacterCard/CharacterCard";
 
 const CharacterDetail = (props) => {
     const params = useParams();
@@ -15,10 +16,11 @@ const CharacterDetail = (props) => {
     const handleClick = () => {
       props.history.goBack();
     }
-    return <div>
-      <h1>{props.character.name}</h1>
+    return (
+    <div className="character-detail">
+      <CharacterCard character={props.character}/>
       <button onClick={handleClick}>Geri Dön</button>
-    </div>;
+    </div>);
 };
 
 export default CharacterDetail;
