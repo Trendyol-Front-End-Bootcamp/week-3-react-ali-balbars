@@ -8,39 +8,33 @@ import Filter from "./components/Filter/Filter";
 import Header from "./components/Header/Header.js";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 
-
 export default function App() {
   const [characters, setCharacters] = useState([]);
   const [filter, setFilter] = useState({
-    search: '',
-    gender: '',
-    isAlive: '',
-    type: '',
+    search: "",
+    gender: "",
+    isAlive: "",
+    type: "",
   });
 
-
-  console.log('filter => ', filter);
-
   const onFilterChange = (event) => {
-    console.log(event.target.dataset.type);
     let filterType = event.target.dataset.type;
 
-
-    switch (filterType) {
-      case 'search':
-        setFilter({
-          search: event.target.value,
-        })
-        break;
-      case 'gender':
-        setFilter({
-          gender: event.target.innerHTML
-        })
-        break;
-      default:
-        break;
-    }
-  }
+    // switch (filterType) {
+    //   case 'search':
+    //     setFilter({
+    //       search: event.target.value,
+    //     })
+    //     break;
+    //   case 'gender':
+    //     setFilter({
+    //       gender: event.target.innerHTML
+    //     })
+    //     break;
+    //   default:
+    //     break;
+    // }
+  };
 
   useEffect(() => {
     fetch("https://rickandmortyapi.com/api/character")
@@ -48,48 +42,58 @@ export default function App() {
         return response.json();
       })
       .then((response) => {
+        console.log("1:", response)
         setCharacters(response.results);
       });
   }, []);
 
   return (
     <Router>
-      <div className="App">
-        <Header />
-        {/* <Filter filter={filter} onFilterChange={onFilterChange} type="search">
-          
-        </Filter> */}
-        <Filter filter={filter} setFilter={setFilter} type="search">
-
-        </Filter>
-
-        <Route
-          path="/"
-          exact
-          render={() => {
-            {
-              return <CharacterList characters={characters} filter={filter} />
-            }
-          }}
-        ></Route>
-
-
-        <Route
-          path="/character/:name"
-          render={(renderProps) => {
-            const character = characters.find(
-              (character) => character.name === renderProps.match.params.name
+      <Route
+        path="/"
+        exact
+        render={() => {
+          {
+            return (
+              <div className="App">
+                <Header />
+                <div>
+                  <Filter
+                    filter={filter}
+                    setFilter={setFilter}
+                    type="search"
+                  />
+                  <CharacterList
+                    characters={characters}
+                    filter={filter}
+                  />
+                </div>
+              </div>
             );
-            return <CharacterDetail {...renderProps} character={character} />;
-          }}
-        ></Route>
+          }
+        }}
+      />
 
-      </div>
+      <Route
+        path="/character/:name"
+        render={(renderProps) => {
+          const character = characters.find(
+            (character) =>
+              character.name.replace(/(\w+)\s(\w+)/, "$1-$2").toLowerCase() === renderProps.match.params.name
+          );
+          console.log(renderProps)
+          return (
+            <CharacterDetail
+              {...renderProps}
+              character={character}
+            />
+          );
+        }}
+      />
     </Router>
   );
 }
 
 function deleteSpace(str) {
-  return str.split(' ').join('');
+  return str.split(" ").join("");
 }
-

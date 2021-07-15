@@ -1,46 +1,57 @@
+import { useEffect } from 'react';
 import './character-card.css';
 
 export default function CharacterCard(props) {
   const { character } = props;
+  let episodeNames = [];
+  // console.log("episodes ", episodeNames);
+  // props.episodes?.map((episode) => console.log(episode.name))
+
+  useEffect(() => {
+    episodeNames = props.episodes;
+  }, [])
 
   return (
 
-    <div className={`card ${character.gender == 'Male' ? 'green': ''}`}>
+    <div className={`card ${character.gender == 'Male' ? 'green' : ''}`}>
       <div className="additional">
         <div className="user-card">
-          <div class="level center">
+          <div className="level center">
             {character.gender}
           </div>
-          <div class="points center">
+          <div className="points center">
             {character.status}
           </div>
           <img width="110" height="110" src={character.image} alt={`${character.name} image`} />
 
         </div>
-        <div class="more-info">
+        <div className="more-info">
           <h1>{character.name}</h1>
           <ul>
-            <li>Type: {character.type || 'Unknown'}</li>
+            <li>Type: {character.species || 'Unknown'}</li>
             <li>Location: {character.location.name || 'Unknown'}</li>
           </ul>
-          
+
         </div>
 
       </div>
-      <div class="general">
+      <div className="general">
+
         <h1>{character.name}</h1>
         <ul>
-          <li>Type: {character.type || 'Unknown'}</li>
+          <li>Type: {character.species || 'Unknown'}</li>
           <li>Location: {character.location.name || 'Unknown'}</li>
+          
         </ul>
-        <span class="more">Click the card for more info</span>
+
+        <ul>
+          {props.episodes?.map((episode) => <li>{episode}</li>)}
+        </ul>
+
+        <span className="more">Click the card for more info</span>
+
       </div>
-      {/* <img width="200" src={character.image} alt={`${character.name} image`} />
-        <div> <span>Name: </span>{character.name}</div>
-        <div> <span>Gender: </span>{character.gender}</div>
-        <div> <span>Type: </span>{character.type || 'Unknown'}</div>
-        <div> <span>Status: </span>{character.status}</div>
-        <div> <span>Location: </span>{character.location.name}</div> */}
+
     </div>
   );
 }

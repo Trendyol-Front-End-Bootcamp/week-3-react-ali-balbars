@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from "react";
-import {
-    BrowserRouter as Router,
-    Link,
-    Route,
-    useParams,
-} from "react-router-dom";
-import CharacterCard from "../CharacterCard/CharacterCard";
+import CharacterCard from '../CharacterCard/CharacterCard';
+import Header from '../Header/Header.js';
+import ButtonBack from '../ButtonBack/ButtonBack';
+import './character-detail.css';
 
-const CharacterDetail = (props) => {
-    const params = useParams();
-    // console.log("match", match);
-    // console.log("params", params);
-    console.log("props", props);
+export default function CharacterDetail(props) {
+  const lastEpisodes = [];
+  useEffect(() => {
 
-    const handleClick = () => {
-      props.history.goBack();
-    }
-    return (
-    <div className="character-detail">
-      <CharacterCard character={props.character}/>
-      <button onClick={handleClick}>Geri Dön</button>
+    getLastEpisodes(5).map((episode) => {
+      fetch(episode)
+        .then(response => response.json())
+        .then(data => lastEpisodes.push(data.name))
+    })
+  }, [])
+
+  const getLastEpisodes = (count) => {
+    return props.character.episode.slice(-count);
+  }
+
+  return (
+    <div className="container">
+      <Header />
+      <div className="character-detail">
+        <CharacterCard character={props.character} episodes={lastEpisodes} />
+        <ButtonBack className="btn-back" history={props.history} character={props.character} />
+      </div>
     </div>);
 };
 
-export default CharacterDetail;

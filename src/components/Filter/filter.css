@@ -1,3 +1,22 @@
+:root {
+    --input-font-size: 18px;
+}
 .Filter {
     padding: 1em;
+}
+
+.form-filter {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+.form-filter input {
+    padding: 0 10px;
+    font-size: var(--input-font-size);
+    font-weight: 500;
+
+}
+
+.form-filter input::placeholder {
+    font-size: var(--input-font-size);
 }

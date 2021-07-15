@@ -11,8 +11,8 @@ export default function CharacterList(props) {
                 .includes(props.filter.search?.toLowerCase().trim()))
                 .map((character) => {
                     return (
-                        <Link to={`character/${character.name}`} className="CharacterLink"
-                        key={character.name}
+                        <Link to={`character/${character.name.replace(/(\w+)\s(\w+)/, "$1-$2").toLowerCase()}`} className="CharacterLink"
+                        key={character.id}
                         style={{textDecoration: 'none', color: 'black'}}>
                             <CharacterCard character={character}/>
                         </Link>

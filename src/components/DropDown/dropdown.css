@@ -12,7 +12,6 @@
 .Dropdown {
     position: relative;
     width: 150px;
-    margin: 0 auto;
     user-select: none;
 }
 

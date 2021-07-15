@@ -8,14 +8,14 @@ export default function Dropdown(props) {
 
     const handleOptionClick = (event) => {
         setSelected(event.target.innerHTML);
-        console.log(event.target.innerHTML);
 
+        
         props.onFilterChange(event);
     }
     return (
         <div className="Dropdown">
             <div className="dropdown-btn" onClick={(e) => setIsActive(!isActive)} tabIndex="1">
-                Choose One
+                Gender
                 <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort-down.png" />
             </div>
 
@@ -33,10 +33,9 @@ export default function Dropdown(props) {
                 {options.map(option => (
                     <div className="dropdown-item"
                         key={option}
-                        onClick={e => props.setFilter({gender: e.target.innerHTML})}
+                        onClick={e => props.setFilter({...props.filter, gender: e.target.innerHTML})}
                         data-type={props.type}>
                         {option}
-
                     </div>
                 ))}
 
