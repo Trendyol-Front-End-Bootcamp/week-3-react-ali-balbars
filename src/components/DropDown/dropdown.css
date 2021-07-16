@@ -11,7 +11,7 @@
 
 .Dropdown {
     position: relative;
-    width: 150px;
+    width: 125px;
     user-select: none;
 }
 
@@ -25,6 +25,8 @@
 
     box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
     font-weight: bold;
+    font-family: inherit;
+    text-transform: uppercase;
 }
 
 .Dropdown .dropdown-btn:focus ~ .dropdown-content{
@@ -38,6 +40,7 @@
     padding: 7px;
     background-color: #fff;
     box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+    font-family: inherit;
     font-weight: 500;
     color: #333;
     width: 100%;
@@ -52,6 +55,8 @@
 .dropdown-content .dropdown-item {
     padding: 10px;
     cursor: pointer;
+    font-family: inherit;
+    font-size: 20px;
     /* transition: background-color 0.2s; */
 }
 

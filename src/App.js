@@ -1,11 +1,10 @@
 import "./css/styles.css";
 import React, { useEffect, useState, useRef } from "react";
-import CharacterCard from "./components/CharacterCard/CharacterCard.js";
 import CharacterList from "./components/CharacterList/CharacterList.js";
-import CharacterDetail from "./components/CharacterDetail/CharacterDetail";
-import Dropdown from "./components/DropDown/Dropdown";
-import Filter from "./components/Filter/Filter";
+import CharacterDetail from "./components/CharacterDetail/CharacterDetail.js";
+import Filter from "./components/Filter/Filter.js";
 import Header from "./components/Header/Header.js";
+import NoResult from "./components/NoResult/NoResult.js";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 
 export default function App() {
@@ -13,10 +12,10 @@ export default function App() {
   const [filter, setFilter] = useState({
     search: "",
     gender: "",
-    isAlive: "",
-    type: "",
+    aliveness: "",
   });
 
+  console.log(filter);
   const onFilterChange = (event) => {
     let filterType = event.target.dataset.type;
 
@@ -56,7 +55,7 @@ export default function App() {
           {
             return (
               <div className="App">
-                <Header />
+                <Header></Header>
                 <div>
                   <Filter
                     filter={filter}
@@ -90,10 +89,9 @@ export default function App() {
           );
         }}
       />
+      <Route
+        path="/no-result"
+        component={NoResult} />
     </Router>
   );
-}
-
-function deleteSpace(str) {
-  return str.split(" ").join("");
 }
