@@ -24,7 +24,7 @@ export default function CharacterDetail(props) {
       <Header />
       <div className="character-detail">
         <CharacterCard character={props.character} episodes={lastEpisodes} />
-        <ButtonBack className="btn-back" history={props.history} character={props.character} />
+        <ButtonBack className="btn-back" character={props.character} />
       </div>
     </div>);
 };

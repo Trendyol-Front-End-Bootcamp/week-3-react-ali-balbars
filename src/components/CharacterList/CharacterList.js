@@ -7,8 +7,25 @@ export default function CharacterList(props) {
     const [filteredCharactes, setFilteredCharactes] = useState([])
     const { filter } = props;
     useEffect(() => {
-        fetch(generateUrl()).then(response => response.json())
-            .then(data => setFilteredCharactes(data.results))
+        // fetch(generateUrl()).then(response => response.json())
+        //     .then(data => setFilteredCharactes(data.results))
+
+        fetch(generateUrl()).
+            then(response => {
+                if (response.status >= 200 && response.status <= 299) {
+                    return response.json();
+                } else {
+                    throw Error(response.statusText);
+                }
+            }).then(data => {
+                console.log('data', data);
+                setFilteredCharactes(data.results) 
+            }
+            ).catch(error => {
+                console.log('catch');
+                goNoResultPage();
+            })
+        // .then(data => setFilteredCharactes(data.results))
 
         console.log(generateUrl());
         console.log(filteredCharactes);
@@ -21,13 +38,21 @@ export default function CharacterList(props) {
         return url;
     }
 
+    const history = useHistory();
+
+    const goNoResultPage = () => {
+        history.push('/no-result')
+    }
+
+    if (filteredCharactes == undefined) {
+        console.log("dizi boş");
+        goNoResultPage();
+    } else {
+    }
+
     return (
         <div className="CharacterList">
-            {/* <Link to="/no-result">
-                tıkla
-            </Link> */}
             {
-        
                 filteredCharactes?.filter(character => character.name.toLowerCase()
                     .includes(props.filter.search?.toLowerCase().trim()))
                     .map((character) => {

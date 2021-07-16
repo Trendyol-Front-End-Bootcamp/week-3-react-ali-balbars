@@ -2,15 +2,26 @@ import React from 'react';
 import './no-result.css';
 import Filter from "../Filter/Filter";
 import Header from "../Header/Header";
-import BackButton from '../ButtonBack/ButtonBack';
+import ButtonBack from '../ButtonBack/ButtonBack';
 
-export default function NoResult() {
+export default function NoResult(props) {
+    const resetFilter = () => {
+        console.log('filter boşaltıldı');
+        props.setFilter({});
+        console.log('filter boşaltıldı');
+    }
     return (
-        <div className="no-result">
+        <div className="no-result-container">
             <Header></Header>
-            <BackButton></BackButton>
-            {/* <Filter></Filter> */}
-            no result
+            <Filter
+                filter={props.filter}
+                setFilter={props.setFilter}
+            />
+            <div className="no-result">
+                <span className="no-result-text">No Result</span>
+                <ButtonBack clearFilter={true} filter={props.filter} setFilter={props.setFilter}></ButtonBack>
+
+            </div>
         </div>
     )
 }

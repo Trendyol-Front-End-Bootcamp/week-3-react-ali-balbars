@@ -9,6 +9,7 @@
     display: flex;
     justify-content: center;
     gap: 30px;
+    flex-wrap: wrap;
 }
 .form-filter input {
     padding: 0 10px;
@@ -19,4 +20,11 @@
 
 .form-filter input::placeholder {
     font-size: var(--input-font-size);
+}
+
+.dropdowns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
 }

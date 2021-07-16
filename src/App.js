@@ -10,30 +10,18 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 export default function App() {
   const [characters, setCharacters] = useState([]);
   const [filter, setFilter] = useState({
-    search: "",
-    gender: "",
-    aliveness: "",
+    search: '',
+    gender: '',
+    aliveness: '',
+    species: '',
   });
 
   console.log(filter);
-  const onFilterChange = (event) => {
-    let filterType = event.target.dataset.type;
 
-    // switch (filterType) {
-    //   case 'search':
-    //     setFilter({
-    //       search: event.target.value,
-    //     })
-    //     break;
-    //   case 'gender':
-    //     setFilter({
-    //       gender: event.target.innerHTML
-    //     })
-    //     break;
-    //   default:
-    //     break;
-    // }
-  };
+  const generateUrl = () => {
+    let url = `https://rickandmortyapi.com/api/character/?gender=${filter.gender ? filter.gender : ''}&species=${filter.species ? filter.species : ''}&status=${filter.aliveness ? filter.aliveness : ''}`;
+    return url;
+  }
 
   useEffect(() => {
     fetch("https://rickandmortyapi.com/api/character")
@@ -60,7 +48,6 @@ export default function App() {
                   <Filter
                     filter={filter}
                     setFilter={setFilter}
-                    type="search"
                   />
                   <CharacterList
                     characters={characters}
@@ -91,7 +78,13 @@ export default function App() {
       />
       <Route
         path="/no-result"
-        component={NoResult} />
+        render={() => {
+          return <NoResult filter={filter}
+            setFilter={setFilter} 
+            generateUrl={generateUrl}/>
+        }}
+
+      />
     </Router>
   );
 }
