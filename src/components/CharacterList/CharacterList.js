@@ -3,7 +3,9 @@ import { Link, useHistory } from "react-router-dom";
 import './character-list.css';
 import CharacterCard from "../CharacterCard/CharacterCard.js";
 import axios from 'axios';
-import RickNotFoundImage from "../../img/rick-not-found.jpg"
+import RickNotFoundImage from '../../img/rick-not-found.jpg';
+import Rick from '../../img/rick.png';
+import Morty from '../../img/morty.png';
 
 export default function CharacterList(props) {
     const [filteredCharacters, setFilteredCharacters] = useState([])
@@ -49,8 +51,6 @@ export default function CharacterList(props) {
     if (filteredCharacters == undefined) {
         goNoResultPage();
     }
-    // console.log('filtered characters', filteredCharacters.filter(character => character.name.toLowerCase()
-    // .includes(props.filter.search?.toLowerCase().trim())));
 
     function getSearchFilteredCharacters(filteredCharacters) {
         return filteredCharacters.filter(character => character.name.toLowerCase()
@@ -63,16 +63,15 @@ export default function CharacterList(props) {
             <div className="not-found">
                 <span>Not Found</span>
                 <img width={200} src={RickNotFoundImage} alt="" />
-                {/* <span>Found</span> */}
             </div>
         );
     }
 
     return (
         <div className="CharacterList">
+            <img height={400} src={Rick} alt="Rick" className="img-rick"/>
+            <img height={400} src={Morty} alt="Morty" className="img-morty"/>
             {
-                // filteredCharacters?.filter(character => character.name.toLowerCase()
-                //     .includes(props.filter.search?.toLowerCase().trim()))
                 getSearchFilteredCharacters(filteredCharacters)
                     .map((character) => {
                         return (
@@ -85,11 +84,6 @@ export default function CharacterList(props) {
                         );
                     })
             }
-
-
-
-
-
         </div>
     );
 }

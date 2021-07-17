@@ -4,10 +4,19 @@
     justify-content: center;
     gap: 40px;
 
+    position: relative;
+
     /* background-image: url('../../img/background-rick.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed; */
+
+    /* background-image: url('https://e7.pngegg.com/pngimages/823/717/png-clipart-rick-and-morty-illustration-morty-smith-rick-sanchez-tote-bag-handbag-dancing-child-hand-thumbnail.png');
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-attachment: fixed; */
+
+    
 }
 
 .CharacterLink {
@@ -28,3 +37,20 @@
 .not-found span {
     font-size: 48px;
 }
+
+/* .CharacterList img {
+    position: fixed;
+} */
+
+.CharacterList .img-rick {
+    position: fixed;
+    left: 20px;
+    bottom: 50px;
+}
+
+.CharacterList .img-morty {
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+}
+
