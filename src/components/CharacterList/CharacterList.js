@@ -2,62 +2,82 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import './character-list.css';
 import CharacterCard from "../CharacterCard/CharacterCard.js";
+import axios from 'axios';
+import RickNotFoundImage from "../../img/rick-not-found.jpg"
 
 export default function CharacterList(props) {
-    const [filteredCharactes, setFilteredCharactes] = useState([])
+    const [filteredCharacters, setFilteredCharacters] = useState([])
     const { filter } = props;
+    const [isLoading, setLoading] = useState(true);
+    const history = useHistory();
     useEffect(() => {
-        // fetch(generateUrl()).then(response => response.json())
-        //     .then(data => setFilteredCharactes(data.results))
 
-        fetch(generateUrl()).
-            then(response => {
+        axios.get(generateUrl())
+            .then((response) => {
                 if (response.status >= 200 && response.status <= 299) {
-                    return response.json();
+                    console.log('axios data', response.data.results);
+                    setFilteredCharacters(response.data.results)
+                    setLoading(false);
+
                 } else {
                     throw Error(response.statusText);
                 }
-            }).then(data => {
-                console.log('data', data);
-                setFilteredCharactes(data.results) 
-            }
-            ).catch(error => {
-                console.log('catch');
+            }).catch(() => {
                 goNoResultPage();
-            })
-        // .then(data => setFilteredCharactes(data.results))
-
-        console.log(generateUrl());
-        console.log(filteredCharactes);
-
+            });
 
     }, [filter.gender, filter.species, filter.aliveness])
 
-    const generateUrl = () => {
+    if (isLoading) {
+        return <div className="CharacterList">
+            Loading...
+        </div>
+    } else {
+
+    }
+
+    function generateUrl() {
         let url = `https://rickandmortyapi.com/api/character/?gender=${filter.gender ? filter.gender : ''}&species=${filter.species ? filter.species : ''}&status=${filter.aliveness ? filter.aliveness : ''}`;
         return url;
     }
 
-    const history = useHistory();
-
-    const goNoResultPage = () => {
+    function goNoResultPage() {
         history.push('/no-result')
     }
 
-    if (filteredCharactes == undefined) {
-        console.log("dizi boş");
+
+    if (filteredCharacters == undefined) {
         goNoResultPage();
-    } else {
+    }
+    // console.log('filtered characters', filteredCharacters.filter(character => character.name.toLowerCase()
+    // .includes(props.filter.search?.toLowerCase().trim())));
+
+    function getSearchFilteredCharacters(filteredCharacters) {
+        return filteredCharacters.filter(character => character.name.toLowerCase()
+            .includes(props.filter.search?.toLowerCase().trim()))
+    }
+
+    if (getSearchFilteredCharacters(filteredCharacters).length === 0) {
+        console.log('characterlist boş');
+        return (
+            <div className="not-found">
+                <span>Not Found</span>
+                <img width={200} src={RickNotFoundImage} alt="" />
+                {/* <span>Found</span> */}
+            </div>
+        );
     }
 
     return (
         <div className="CharacterList">
             {
-                filteredCharactes?.filter(character => character.name.toLowerCase()
-                    .includes(props.filter.search?.toLowerCase().trim()))
+                // filteredCharacters?.filter(character => character.name.toLowerCase()
+                //     .includes(props.filter.search?.toLowerCase().trim()))
+                getSearchFilteredCharacters(filteredCharacters)
                     .map((character) => {
                         return (
-                            <Link to={`character/${character.name.replace(/(\w+)\s(\w+)/, "$1-$2").toLowerCase()}`} className="CharacterLink"
+
+                            <Link to={`character/${character.name.split(' ').join('-').toLowerCase()}`} className="CharacterLink"
                                 key={character.id}
                                 style={{ textDecoration: 'none', color: 'black' }}>
                                 <CharacterCard character={character} />

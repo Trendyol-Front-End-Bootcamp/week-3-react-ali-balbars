@@ -16,8 +16,6 @@ export default function App() {
     species: '',
   });
 
-  console.log(filter);
-
   const generateUrl = () => {
     let url = `https://rickandmortyapi.com/api/character/?gender=${filter.gender ? filter.gender : ''}&species=${filter.species ? filter.species : ''}&status=${filter.aliveness ? filter.aliveness : ''}`;
     return url;
@@ -29,7 +27,6 @@ export default function App() {
         return response.json();
       })
       .then((response) => {
-        console.log("1:", response)
         setCharacters(response.results);
       });
   }, []);
@@ -67,7 +64,6 @@ export default function App() {
             (character) =>
               character.name.replace(/(\w+)\s(\w+)/, "$1-$2").toLowerCase() === renderProps.match.params.name
           );
-          console.log(renderProps)
           return (
             <CharacterDetail
               {...renderProps}
@@ -80,8 +76,8 @@ export default function App() {
         path="/no-result"
         render={() => {
           return <NoResult filter={filter}
-            setFilter={setFilter} 
-            generateUrl={generateUrl}/>
+            setFilter={setFilter}
+            generateUrl={generateUrl} />
         }}
 
       />

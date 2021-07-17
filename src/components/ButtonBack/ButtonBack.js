@@ -14,8 +14,6 @@ export default function ButtonBack(props) {
                 aliveness: '',
                 species: '',
             })
-                
-            
         }
         history.goBack();
     }

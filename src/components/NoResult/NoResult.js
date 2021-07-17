@@ -6,9 +6,7 @@ import ButtonBack from '../ButtonBack/ButtonBack';
 
 export default function NoResult(props) {
     const resetFilter = () => {
-        console.log('filter boşaltıldı');
         props.setFilter({});
-        console.log('filter boşaltıldı');
     }
     return (
         <div className="no-result-container">
