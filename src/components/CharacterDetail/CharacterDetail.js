@@ -6,69 +6,49 @@ import './character-detail.css';
 import axios from 'axios';
 
 export default function CharacterDetail(props) {
-  let episodeNames = [];
-  let linkName = '';
-  const baseApiUrl = 'https://rickandmortyapi.com/api/character/?name=';
-  const characterName = formatLinkName(props.match.params.name);
+  const BASE_API_URL = 'https://rickandmortyapi.com/api/character/?name=';
+  const characterName = getFormattedName(props.match.params.name);
+  console.log(characterName);
   const [character, setCharacter] = useState({});
-  const [isLoading, setLoading] = useState(true);
+  const [lastEpisodesNames, setLastEpisodesNames] = useState([]);
+
   useEffect(() => {
-    axios.get(baseApiUrl + characterName)
-      .then(response => {
+    console.log("useEffect çalıştı")
+    axios.get(BASE_API_URL + characterName)
+      .then((response) => {
         setCharacter(response.data.results[0]);
-        setLoading(false);
-
-      })
-    // getLastEpisodes(5).map((episodeUrl) => {
-    //   fetch(episodeUrl)
-    //     .then(response => response.json())
-    //     .then(data => lastEpisodes.push(data.name))
-    // })
-
-
+        return response.data.results[0];
+      }).then(chr =>
+        chr.episode.reverse()
+          .map((link) => Number(link.match(/\d+/)[0]))
+          .slice(0, 5)
+      ).then(characterEpisodeIDs => fetch(
+        `https://rickandmortyapi.com/api/episode/${characterEpisodeIDs.join()}`
+      )).then((response2) => response2.json()).then((data) =>
+        Array.isArray(data) ? data.sort((a, b) => a - b).reverse() : Array(data)
+      )
+      .then((chrLastEpisodes) => {
+        console.log(chrLastEpisodes.map(episode => episode.name))
+        setLastEpisodesNames(chrLastEpisodes.map(episode => episode.name))
+      });
   }, [])
 
-  if (isLoading) {
-    return <div></div>
-  } else {
-    // console.log('episodes', character.episode.slice(-5));
-    // console.log('bbb', getEpisodeNames(getLastEpisodeUrls(5)));
-    episodeNames = getEpisodeNames(getLastEpisodeUrls(5));
-    console.log('episode Names', episodeNames);
-  }
-
-
-  function formatLinkName(str) {
-    let splittedArray = str.split('-');
-    let capitalized = splittedArray.map((e) => capitalize(e));
+  function getFormattedName(linkName) {
+    let splitted = linkName.split('-');
+    let capitalized = splitted.map(e => capitalize(e));
     return capitalized.join(' ');
   }
 
   function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-
-  function getEpisodeNames(urlArray) {
-    let array = [];
-    urlArray.map((episodeUrl) => {
-      axios.get(episodeUrl)
-        .then(response => {
-          // return `${response.data.id}- ${response.data.name}`;
-          array.push(`${response.data.id}- ${response.data.name}`);
-        })
-    })
-    return array;
-  }
-
-  function getLastEpisodeUrls(count) {
-    return character.episode.slice(-count);
+    let capitalized = str[0].toUpperCase() + str.slice(1);
+    return capitalized;
   }
 
   return (
     <div className="container">
       <Header />
       <div className="character-detail">
-        <CharacterCard character={character} episodeNames={episodeNames} />
+        <CharacterCard character={character} episodeNames={lastEpisodesNames} />
         <ButtonBack className="btn-back" />
       </div>
     </div>

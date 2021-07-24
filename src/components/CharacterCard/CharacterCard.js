@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 import './character-card.css';
 
-export default function CharacterCard(props) {
-  const { character, episodeNames } = props;
+export default function CharacterCard({ character, episodeNames }) {
   console.log('card', episodeNames);
 
 
   return (
-    <div className={`card ${character.gender == 'Male' ? 'green' : ''}`}>
+    <div className={`card ${character.gender == 'Male' ? 'green' : ''}  ${episodeNames ? 'long' : 'short'}`}>
       <div className="additional">
         <div className="user-card">
           <div className="level center">
@@ -21,9 +20,16 @@ export default function CharacterCard(props) {
         </div>
         <div className="more-info">
           <h1>{character.name}</h1>
-          <ul>
-            <li>Type: {character.species || 'Unknown'}</li>
-            <li>Location: {character.location.name || 'Unknown'}</li>
+          <ul className="character-specs">
+            <li><strong>Type:</strong> {character.species || 'Unknown'}</li>
+            <li><strong>Location:</strong> {character?.location?.name || 'Unknown'}</li>
+            {episodeNames ? (
+              <li className="episodes-li">
+                <strong>Last 5 Episodes:</strong>
+                <ul className="episode-list">
+                  {episodeNames?.map((episode) => <li>{episode}</li>)}
+                </ul>
+              </li>) : null}
           </ul>
 
         </div>
@@ -31,24 +37,19 @@ export default function CharacterCard(props) {
       </div>
       <div className="general">
         <h1>{character.name}</h1>
-        <ul>
-          <li>Type: {character.species || 'Unknown'}</li>
-          <li>Location: {character.location.name || 'Unknown'}</li>
-          
+        <ul className="character-specs">
+          <li><strong>Type:</strong> {character.species || 'Unknown'}</li>
+          <li><strong>Location:</strong> {character?.location?.name || 'Unknown'}</li>
+          {episodeNames ? (
+              <li className="episodes-li">
+                <strong>Last 5 Episodes:</strong>
+                <ul className="episode-list">
+                  {episodeNames?.map((episode) => <li>{episode}</li>)}
+                </ul>
+              </li>) : null}
         </ul>
 
-        {/* {episodeNames} */}
-
-        <ul>
-          {
-            episodeNames?.map((episodeName) => {
-              return <li key={episodeName}>{episodeName}</li>
-            })
-          }
-        </ul>
-        
-
-        <span className="more">Click the card for more info</span>
+        {episodeNames ? null : (<span className="more">Click the card for more info</span>)}
 
       </div>
     </div>

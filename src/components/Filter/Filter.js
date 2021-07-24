@@ -34,9 +34,11 @@ export default function Filter(props) {
     return (
         <div className="Filter">
             <form className="form-filter">
-                <input type="text" onChange={e => props.setFilter({ ...props.filter, search: e.target.value })}
-                    placeholder="Character Name" value={props.filter.search}
-                    data-type={props.type} />
+                <div className="search-container">
+                    <input type="text" onChange={e => props.setFilter({ ...props.filter, search: e.target.value })}
+                        placeholder="Character Name" value={props.filter.search}
+                        data-type={props.type} />
+                </div>
                 <div className="dropdowns">
 
                     <Dropdown filter={props.filter} setFilter={props.setFilter}

@@ -10,6 +10,10 @@ html, body * {
   font-family: Abel, Arial, Verdana, sans-serif;
 }
 
+ul {
+  padding: 0;
+}
+
 .center {
   position: absolute;
   top: 50%;
@@ -17,9 +21,17 @@ html, body * {
   transform: translate(-50%, -50%);
 }
 
+
+.short {
+  height: 250px;
+}
+
+.long {
+  height: 300px;
+}
+
 .card {
   width: 450px;
-  height: 250px;
   background-color: #fff;
   background: linear-gradient(#f8f8f8, #fff);
   box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
@@ -114,9 +126,14 @@ html, body * {
   color: #fff;
   margin-bottom: 0;
 }
-.card .additional .more-info ul {
-  
+
+.card .additional .more-info ul.character-specs ,
+.card .general ul.character-specs {
   margin-top: 22px;
+}
+
+.episodes-li {
+  margin-top: 15px;
 }
 
 .card.green .additional .more-info h1 {

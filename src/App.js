@@ -49,6 +49,7 @@ export default function App() {
                   <CharacterList
                     characters={characters}
                     filter={filter}
+                    setFilter={setFilter}
                   />
                 </div>
               </div>
@@ -67,7 +68,6 @@ export default function App() {
           return (
             <CharacterDetail
               {...renderProps}
-              character={character}
             />
           );
         }}

@@ -28,3 +28,7 @@
     justify-content: center;
     gap: 30px;
 }
+
+.search-container input{
+    height: 100%;
+}

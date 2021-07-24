@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import './character-list.css';
 import CharacterCard from "../CharacterCard/CharacterCard.js";
+import ButtonBack from "../ButtonBack/ButtonBack.js";
 import axios from 'axios';
 import RickNotFoundImage from '../../img/rick-not-found.jpg';
 import Rick from '../../img/rick.png';
@@ -63,14 +64,15 @@ export default function CharacterList(props) {
             <div className="not-found">
                 <span>Not Found</span>
                 <img width={200} src={RickNotFoundImage} alt="" />
+                <ButtonBack clearFilter={true} filter={props.filter} setFilter={props.setFilter}></ButtonBack>
             </div>
         );
     }
 
     return (
         <div className="CharacterList">
-            <img height={400} src={Rick} alt="Rick" className="img-rick"/>
-            <img height={400} src={Morty} alt="Morty" className="img-morty"/>
+            <img height={300} src={Rick} alt="Rick" className="img-rick"/>
+            <img height={300} src={Morty} alt="Morty" className="img-morty"/>
             {
                 getSearchFilteredCharacters(filteredCharacters)
                     .map((character) => {
