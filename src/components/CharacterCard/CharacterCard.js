@@ -1,9 +1,6 @@
-import { useEffect } from 'react';
 import './character-card.css';
 
 export default function CharacterCard({ character, episodeNames }) {
-  console.log('card', episodeNames);
-
 
   return (
     <div className={`card ${character.gender == 'Male' ? 'green' : ''}  ${episodeNames ? 'long' : 'short'}`}>
@@ -27,7 +24,7 @@ export default function CharacterCard({ character, episodeNames }) {
               <li className="episodes-li">
                 <strong>Last 5 Episodes:</strong>
                 <ul className="episode-list">
-                  {episodeNames?.map((episode) => <li>{episode}</li>)}
+                  {episodeNames?.map((episode) => <li key={episode}>{episode}</li>)}
                 </ul>
               </li>) : null}
           </ul>
@@ -44,7 +41,7 @@ export default function CharacterCard({ character, episodeNames }) {
               <li className="episodes-li">
                 <strong>Last 5 Episodes:</strong>
                 <ul className="episode-list">
-                  {episodeNames?.map((episode) => <li>{episode}</li>)}
+                  {episodeNames?.map((episode) => <li key={episode}>{episode}</li>)}
                 </ul>
               </li>) : null}
         </ul>

@@ -1,11 +1,11 @@
 import "./css/styles.css";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState} from "react";
 import CharacterList from "./components/CharacterList/CharacterList.js";
 import CharacterDetail from "./components/CharacterDetail/CharacterDetail.js";
 import Filter from "./components/Filter/Filter.js";
 import Header from "./components/Header/Header.js";
 import NoResult from "./components/NoResult/NoResult.js";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 export default function App() {
   const [characters, setCharacters] = useState([]);

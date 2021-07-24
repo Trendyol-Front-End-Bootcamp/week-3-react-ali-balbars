@@ -18,7 +18,6 @@ export default function CharacterList(props) {
         axios.get(generateUrl())
             .then((response) => {
                 if (response.status >= 200 && response.status <= 299) {
-                    console.log('axios data', response.data.results);
                     setFilteredCharacters(response.data.results)
                     setLoading(false);
 
@@ -59,7 +58,6 @@ export default function CharacterList(props) {
     }
 
     if (getSearchFilteredCharacters(filteredCharacters).length === 0) {
-        console.log('characterlist boş');
         return (
             <div className="not-found">
                 <span>Not Found</span>

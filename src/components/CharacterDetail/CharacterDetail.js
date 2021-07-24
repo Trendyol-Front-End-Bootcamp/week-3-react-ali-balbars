@@ -8,27 +8,26 @@ import axios from 'axios';
 export default function CharacterDetail(props) {
   const BASE_API_URL = 'https://rickandmortyapi.com/api/character/?name=';
   const characterName = getFormattedName(props.match.params.name);
-  console.log(characterName);
   const [character, setCharacter] = useState({});
   const [lastEpisodesNames, setLastEpisodesNames] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect çalıştı")
     axios.get(BASE_API_URL + characterName)
       .then((response) => {
         setCharacter(response.data.results[0]);
         return response.data.results[0];
-      }).then(chr =>
-        chr.episode.reverse()
-          .map((link) => Number(link.match(/\d+/)[0]))
-          .slice(0, 5)
-      ).then(characterEpisodeIDs => fetch(
+      })
+      .then(character =>
+        extractEpidoseIdsFromUrls(5, character.episode.reverse())
+      )
+      .then(characterEpisodeIDs => fetch(
         `https://rickandmortyapi.com/api/episode/${characterEpisodeIDs.join()}`
-      )).then((response2) => response2.json()).then((data) =>
-        Array.isArray(data) ? data.sort((a, b) => a - b).reverse() : Array(data)
+      ))
+      .then(response2 => response2.json())
+      .then(data =>
+        sortArrayDesc(data)
       )
       .then((chrLastEpisodes) => {
-        console.log(chrLastEpisodes.map(episode => episode.name))
         setLastEpisodesNames(chrLastEpisodes.map(episode => episode.name))
       });
   }, [])
@@ -42,6 +41,24 @@ export default function CharacterDetail(props) {
   function capitalize(str) {
     let capitalized = str[0].toUpperCase() + str.slice(1);
     return capitalized;
+  }
+
+  function sortArrayDesc(array) {
+    if (!Array.isArray(array)) {
+      return Array(array);
+    }
+
+    let arrayCopy = array.slice();
+    return arrayCopy.sort((a, b) => b - a);
+  }
+
+  function extractEpidoseIdsFromUrls(count, urlArray) {
+    const episodeIds = urlArray.map
+      (episodeUrl =>
+        Number(episodeUrl.match(/\d+/)[0])
+      ).slice(0, count);
+
+    return episodeIds;
   }
 
   return (
