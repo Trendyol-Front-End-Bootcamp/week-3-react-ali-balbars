@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import CharacterCard from '../CharacterCard/CharacterCard';
-import Header from '../Header/Header.js';
-import ButtonBack from '../ButtonBack/ButtonBack';
+import CharacterCard from '../../components/CharacterCard/CharacterCard';
+import Header from '../../components/Header/Header.js';
+import ButtonBack from '../../components/ButtonBack/ButtonBack';
 import './character-detail.css';
 import axios from 'axios';
 

@@ -1,7 +1,8 @@
 import "./css/styles.css";
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CharacterList from "./components/CharacterList/CharacterList.js";
-import CharacterDetail from "./components/CharacterDetail/CharacterDetail.js";
+import CharacterDetail from "./pages/CharacterDetail/CharacterDetail.js";
+import Homepage from "./pages/Homepage/Homepage.js";
 import Filter from "./components/Filter/Filter.js";
 import Header from "./components/Header/Header.js";
 import NoResult from "./components/NoResult/NoResult.js";
@@ -39,20 +40,10 @@ export default function App() {
         render={() => {
           {
             return (
-              <div className="App">
-                <Header></Header>
-                <div>
-                  <Filter
-                    filter={filter}
-                    setFilter={setFilter}
-                  />
-                  <CharacterList
-                    characters={characters}
-                    filter={filter}
-                    setFilter={setFilter}
-                  />
-                </div>
-              </div>
+              <Homepage
+                filter={filter}
+                setFilter={setFilter}
+                characters={characters} />
             );
           }
         }}
