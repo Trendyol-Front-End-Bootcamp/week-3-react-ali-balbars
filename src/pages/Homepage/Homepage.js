@@ -6,7 +6,7 @@ import Filter from '../../components/Filter/Filter';
 
 export default function Homepage({filter, setFilter, characters}) {
     return (
-        <div class="homepage">
+        <div className="homepage">
             <Header></Header>
             <div>
                 <Filter

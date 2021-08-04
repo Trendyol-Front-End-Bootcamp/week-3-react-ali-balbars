@@ -11,26 +11,46 @@ export default function CharacterDetail(props) {
   const [character, setCharacter] = useState({});
   const [lastEpisodesNames, setLastEpisodesNames] = useState([]);
 
-  useEffect(() => {
-    axios.get(BASE_API_URL + characterName)
-      .then((response) => {
-        setCharacter(response.data.results[0]);
-        return response.data.results[0];
-      })
-      .then(character =>
-        extractEpidoseIdsFromUrls(5, character.episode.reverse())
-      )
-      .then(characterEpisodeIDs => fetch(
-        `https://rickandmortyapi.com/api/episode/${characterEpisodeIDs.join()}`
-      ))
-      .then(response2 => response2.json())
-      .then(data =>
-        sortArrayDesc(data)
-      )
-      .then((chrLastEpisodes) => {
-        setLastEpisodesNames(chrLastEpisodes.map(episode => episode.name))
-      });
+  useEffect(async () => {
+    // getCharacterPromise().then(console.log)
+    // await getCharacterPromise().then((character) => setCharacter(character))
+    // console.log(character);
+    await setCharacter(await getCharacter())
+    await printCharacter()
+    
+    // console.log(getCharacter());
+    // axios.get(BASE_API_URL + characterName)
+    //   .then((response) => {
+    //     setCharacter(response.data.results[0]);
+    //     return response.data.results[0];
+    //   })
+    //   .then(character =>
+    //     extractEpidoseIdsFromUrls(5, character.episode.reverse())
+    //   )
+    //   .then(characterEpisodeIDs => fetch(
+    //     `https://rickandmortyapi.com/api/episode/${characterEpisodeIDs.join()}`
+    //   ))
+    //   .then(response2 => response2.json())
+    //   .then(data =>
+    //     sortArrayDesc(data)
+    //   )<
+    //   .then((chrLastEpisodes) => {
+    //     setLastEpisodesNames(chrLastEpisodes.map(episode => episode.name))
+    //   });
   }, [])
+
+  async function getCharacter() {
+    let character;
+    await axios.get(BASE_API_URL + characterName)
+    .then(response => {
+      character = response.data.results[0];
+    })
+    return character;
+  }
+
+  async function printCharacter() {
+    await console.log(character);
+  }
 
   function getFormattedName(linkName) {
     let splitted = linkName.split('-');
