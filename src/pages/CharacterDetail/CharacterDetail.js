@@ -4,6 +4,7 @@ import Header from "../../components/Header/Header.js";
 import ButtonBack from "../../components/ButtonBack/ButtonBack";
 import "./character-detail.css";
 import axios from "axios";
+import { getFormattedName } from '../../utils';
 
 export default function CharacterDetail(props) {
     const BASE_API_URL = "https://rickandmortyapi.com/api/character/?name=";
@@ -13,15 +14,15 @@ export default function CharacterDetail(props) {
 
     useEffect(async () => {
         const character = await getCharacter();
-        await setCharacter(character);
+        setCharacter(character);
         const lastEpisodeUrls = character.episode.slice(-5);
 
-        let promise = Promise.all(
+        let lastEpisodeNames = Promise.all(
             lastEpisodeUrls.map((episode) =>
                 axios.get(episode).then((response) => response.data.name)
             )
         );
-        setLastEpisodeNames(await promise);
+        setLastEpisodeNames(await lastEpisodeNames);
     }, []);
 
     async function getCharacter() {
@@ -30,18 +31,7 @@ export default function CharacterDetail(props) {
             character = response.data.results[0];
         });
         return character;
-    }
-
-    function getFormattedName(linkName) {
-        let splitted = linkName.split("-");
-        let capitalized = splitted.map((e) => capitalize(e));
-        return capitalized.join(" ");
-    }
-
-    function capitalize(str) {
-        let capitalized = str[0].toUpperCase() + str.slice(1);
-        return capitalized;
-    }
+    };
 
     return (
         <div className="container">

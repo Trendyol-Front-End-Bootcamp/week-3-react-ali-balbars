@@ -1,4 +1,4 @@
-### Live
+## Live
 
 https://rick-and-morty-ali.netlify.app/
 
