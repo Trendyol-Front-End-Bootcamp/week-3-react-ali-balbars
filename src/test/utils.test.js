@@ -1,4 +1,4 @@
-import { capitalize, getFormattedName} from '../utils.js';
+import { capitalize,  linkToName, nameToLink} from '../utils.js';
 
 describe('test capitalize function', () => {
     it('should make string first letter capitalized', () => {
@@ -18,13 +18,13 @@ describe('test capitalize function', () => {
 describe('test getFormattedName function', () => {
     it('should return formatted link name', () => {
         const linkName = 'rick-sanchez'
-        const result = getFormattedName(linkName)
+        const result = linkToName(linkName)
         expect(result).toBe('Rick Sanchez')
     })
 
     it('should return empty string when passing undefined', () => {
         let linkName;
-        const result = getFormattedName(linkName)
+        const result = linkToName(linkName)
         expect(result).toBe('')
     })
 })
