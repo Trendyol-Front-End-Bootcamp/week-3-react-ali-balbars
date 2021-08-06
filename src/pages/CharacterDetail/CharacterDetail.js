@@ -5,6 +5,7 @@ import ButtonBack from "../../components/ButtonBack/ButtonBack";
 import "./character-detail.css";
 import axios from "axios";
 import { getFormattedName } from '../../utils';
+import APIService from "../../services/api.services";
 
 export default function CharacterDetail(props) {
     const BASE_API_URL = "https://rickandmortyapi.com/api/character/?name=";
@@ -13,7 +14,8 @@ export default function CharacterDetail(props) {
     const [lastEpisodeNames, setLastEpisodeNames] = useState([]);
 
     useEffect(async () => {
-        const character = await getCharacter();
+        // const character = await getCharacter();
+        const character = await APIService.getCharacterByName(characterName);
         setCharacter(character);
         const lastEpisodeUrls = character.episode.slice(-5);
 
@@ -31,7 +33,11 @@ export default function CharacterDetail(props) {
             character = response.data.results[0];
         });
         return character;
-    };
+    }
+
+    function deneme() {
+        return 'deneme'
+    }
 
     return (
         <div className="container">

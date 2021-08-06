@@ -34,8 +34,6 @@ export default function CharacterList(props) {
         return <div className="CharacterList">
             Loading...
         </div>
-    } else {
-
     }
 
     function generateUrl() {
