@@ -27,6 +27,6 @@ export function nameToLink(name) {
 
 export function filterByName(characters, name) {
     return characters.filter((character) =>
-        character.name.toLowerCase().includes(name)
+        character.name.toLowerCase().includes(name.toLowerCase())
     );
 }

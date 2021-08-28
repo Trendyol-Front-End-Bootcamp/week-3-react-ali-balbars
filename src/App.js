@@ -1,10 +1,7 @@
 import "./css/styles.css";
 import React, { useEffect, useState } from "react";
-import CharacterList from "./components/CharacterList/CharacterList.js";
 import CharacterDetail from "./pages/CharacterDetail/CharacterDetail.js";
 import Homepage from "./pages/Homepage/Homepage.js";
-import Filter from "./components/Filter/Filter.js";
-import Header from "./components/Header/Header.js";
 import NoResult from "./components/NoResult/NoResult.js";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
